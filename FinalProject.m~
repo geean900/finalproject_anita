@@ -197,19 +197,81 @@ legend('data','line equal to 4kWh/m^2/day')
 %% Temperate Subarctic Churchill, Manitoba in Canada 58.7684° N, 94.1650° W
 %Created function seasonal.m
 church_yr=seasonal(58.7684,94.1650);
-% Tropical Rainforest Panama City, Panama 8.9824° N, 79.5199° W
+%%
+scatter(month,church_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Churchill, Manitoba')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
+%% Tropical Rainforest Panama City, Panama 8.9824° N, 79.5199° W
 pan_yr=seasonal(8.9824,79.5199);
-%Tropical Desert Cabo San Lucas, Mexico 22.8905° N, 109.9167° W
+%%
+scatter(month,pan_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Panama City, Panama')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
+%% Tropical Desert Cabo San Lucas, Mexico 22.8905° N, 109.9167° W
 cab_yr=seasonal(22.8905,109.9167);
-% Humid Subtropical Orlando, Florida 28.5383° N, 81.3792° W
+%%
+scatter(month,cab_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Cabo San Lucas, Mexico')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
+%% Humid Subtropical Orlando, Florida 28.5383° N, 81.3792° W
 orl_yr=seasonal(28.5383,81.3792);
-% Temperature Grassland Helena, Montana 46.5891° N, 112.0391° W
+%%
+scatter(month,orl_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Orlando, FL')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
+%% Temperature Grassland Helena, Montana 46.5891° N, 112.0391° W
 hel_yr=seasonal(46.5891,112.0391);
-% Tropical Grasslands Mexico City, Mexico 19.4326° N, 99.1332° W
+%%
+scatter(month,hel_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Helena, MT')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
+%% Tropical Grasslands Mexico City, Mexico 19.4326° N, 99.1332° W
 mex_yr=seasonal(19.4326,99.1332);
-% Subtropical Desert Torreón, Mexico 25.5428° N, 103.4068° W
+%%
+scatter(month,mex_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Mexico City, Mexico')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
+%% Subtropical Desert Torreón, Mexico 25.5428° N, 103.4068° W
 tor_yr=seasonal(25.5428,103.4068);
-
+%%
+scatter(month,tor_yr,'filled')
+hold on
+plot(x,y)
+hold off
+title('Seasonal Cycle of Total Solar Radiation in Torreón, Mexico')
+ylabel('Total Solar Radiation (kWh/m^2/day)')
+xlabel('month')
+legend('data','line equal to 4kWh/m^2/day')
 %%  One Plot of All Locations
 plot(month,bos_year,'color',[0 0 1],'LineWidth',3)
 hold on
@@ -224,6 +286,17 @@ plot(x,y,'color',[.5843 .8157 .9882],'LineWidth',2.5)
 hold off
 title('Seasonal Cycle of Total Annual Solar Radiation at all Locations with Different Climate Zones')
 legend('Boston(Temperate)','Churchill(Temperate Subarctic)','Helena (Temperate Grassland)','Orlando (Humid Subtropical)','Torreón (Subtropical Desert)','Panama City (Tropical Rainforest)','Cabo San Lucas (Tropical Desert)', 'Mexico City (Tropical Grassland)', 'line equal to 4kWh/m^2/day','Location','eastoutside')
+% %% World Map of North America of Solar Radiation
+% lati = [42.3601,58.7684,8.9824,22.8905,28.5383,46.5891,19.4326,25.5428];
+% long = [360-71.0589,360-94.1650,360-79.5199,360-109.9167,360-81.3792,360-112.0391,360-99.1332,360-103.4068];
+% global_ann(global_ann<4)= NaN
+% worldmap([0 70],[-140 -50])
+% load coastlines
+% contourfm(lat,lon, global_ann','linecolor','none')
+% scatterm(lati,long,150,[1 0 0],'filled')
+% geoshow(coastlat,coastlon,'Color','k')
+% colorbar
+% title('Annual Total Solar Radiation greater than or equal to 4 kWh/m^2/day in North America and the Location of Stations')
 
 %% Doing a Cutoff where 8 or more months have to be greater than or equal to 4 kWh/m^2/day 
 
@@ -241,10 +314,32 @@ for i = 1: length(lat)
     end
 end
 
+%% Global Map of 8 or more months have to be greater than or equal to 4 kWh/m^2/day 
+nans(nans>4)=NaN
+worldmap('World')
+load coastlines
+contourfm(lat,lon, nans','linecolor','none')
+geoshow(coastlat,coastlon,'Color','k')
+colorbar
+title('Areas where solar panels should be built (4 or less months have less than 4 kWh/m^2/day)')
+%% North America Map of 8 or more months have to be greater than or equal to 4 kwH/m^2/day 
+worldmap([0 70],[-140 -50])
+load coastlines
+contourfm(lat,lon, nans','linecolor','none')
+geoshow(coastlat,coastlon,'Color','k')
+colorbar
+title('Areas where solar panels should be built (4 or less months have less than 4 kWh/m^2/day)')
 
 %% Global Map of 9 or more months have to greater than or equal to 4 kWh/m^2/day
 nans(nans>3)=NaN
 worldmap('World')
+load coastlines
+contourfm(lat,lon, nans','linecolor','none')
+geoshow(coastlat,coastlon,'Color','k')
+colorbar
+title('Areas where solar panels should be built (3 or less months have less than 4 kWh/m^2/day)')
+%% Map of North America of 9 or more months greater than or equal to 4 kWh/m^2/day
+worldmap([0 70],[-140 -50])
 load coastlines
 contourfm(lat,lon, nans','linecolor','none')
 geoshow(coastlat,coastlon,'Color','k')
@@ -259,4 +354,21 @@ contourfm(lat,lon, nans','linecolor','none')
 geoshow(coastlat,coastlon,'Color','k')
 colorbar
 title('Areas where solar panels absolutely should be built (0  months have less than 4 kWh/m^2/day)')
-
+%% North America Map of 0 months that have less than 4 kWh/m^2/day
+worldmap([0 70],[-140 -50])
+load coastlines
+contourfm(lat,lon, nans','linecolor','none')
+geoshow(coastlat,coastlon,'Color','k')
+colorbar
+title('Areas where solar panels should be built (0 months have less than 4 kWh/m^2/day)')
+% %% World Map of North America of Solar Radiation
+% lati = [42.3601,58.7684,8.9824,22.8905,28.5383,46.5891,19.4326,25.5428];
+% long = [360-71.0589,360-94.1650,360-79.5199,360-109.9167,360-81.3792,360-112.0391,360-99.1332,360-103.4068];
+% global_ann(global_ann<4)= NaN
+% worldmap([0 70],[-140 -50])
+% load coastlines
+% contourfm(lat,lon, global_ann','linecolor','none')
+% scatterm(lati,long,150,[1 0 0],'filled')
+% geoshow(coastlat,coastlon,'Color','k')
+% colorbar
+% title('Annual Total Solar Radiation greater than or equal to 4 kWh/m^2/day in North America and the Location of Stations')
