@@ -1,10 +1,36 @@
-function[bos_year,P,P1] = seasonal(L1,L2)
+function[loc_year] = seasonal(LAT,LON)
+% seasonal: Analyze monthly averages of global solar radiation at individual stations
+%===================================================================
+%
+% USAGE:  [loc_year] = seasonal(LAT,LON)
+%
+% DESCRIPTION:
+%   Use this function to collect the 30 year monthly averages of global solar radiation
+%   from individual stations from the period January 1984 to December 2013
+%
+% INPUT:
+%   LAT: latitude of the station 
+%   LON: longitude of the station
+%
+% OUTPUT:
+%    loc_year: the 12 monthly averages of global solar radiation for the
+%    station
+%  
+%
+% AUTHOR:   Anita Gee 
+%
+% REFERENCE:
+%    Written for EESC 4464: Environmental Data Exploration and Analysis, Boston College
+%    Data are from NASA?s Langley Research Center using POWER Data Access Viewer
+%==================================================================
+%% read the data in
 filename = 'POWER_Global_Climatology_d8169934.csv';
 solardata = readtable(filename);
 solarpara = solardata.PARAMETER;
 diffpara = solardata(strcmp(solarpara, 'DIFF'), :);
 dnrpara = solardata(strcmp(solarpara, 'DNR'), :);
 albedopara = solardata(strcmp(solarpara, 'SRF_ALB'), :);
+%% use array method for diffuse radiation
 lat = unique(diffpara.LAT); 
 lon = unique(diffpara.LON);
 diff_ann = zeros(length(lon),length(lat));
@@ -53,6 +79,7 @@ for i = 1:height(diffpara)
   diff_nov(d,e)=  dnrnov;
    diff_dec(d,e)= dnrdec ;
 end
+%% array method for normal radiation 
 dnr_jan = zeros(length(lon),length(lat));
 dnr_feb = zeros(length(lon),length(lat));
 dnr_mar = zeros(length(lon),length(lat));
@@ -95,10 +122,12 @@ for i = 1:height(dnrpara)
   dnr_nov(d,e)=  dnrnov;
    dnr_dec(d,e)= dnrdec ;
 end
-latbos=abs(lat-L1);
+%% Find the point closest to the latitude and longitude of the station
+latbos=abs(lat-LAT);
 [~,P]=min(latbos);
-lonbos=abs(lon-(360-L2));
+lonbos=abs(lon-(360-LON));
 [~,P1]=min(lonbos);
+%% pull out the 12 months from the monthly global solar radiation array
  jan_bos = diff_jan(P1,P)+dnr_jan(P1,P);
  feb_bos = diff_feb(P1,P)+dnr_feb(P1,P);
  mar_bos = diff_mar(P1,P)+dnr_mar(P1,P);
@@ -111,17 +140,17 @@ lonbos=abs(lon-(360-L2));
 oct_bos=diff_oct(P1,P)+dnr_oct(P1,P);
  nov_bos=diff_nov(P1,P)+dnr_nov(P1,P);
  dec_bos=diff_dec(P1,P)+dnr_dec(P1,P);
-bos_year = zeros(1,12);
-bos_year(1)=jan_bos;
-bos_year(2)=feb_bos;
-bos_year(3)=mar_bos;
-bos_year(4)=apr_bos;
-bos_year(5)=may_bos;
-bos_year(6)=jun_bos;
-bos_year(7)=jul_bos;
-bos_year(8)=aug_bos;
-bos_year(9)=sep_bos;
-bos_year(10)=oct_bos;
-bos_year(11)=nov_bos;
-bos_year(12)=dec_bos;
+loc_year = zeros(1,12);
+loc_year(1)=jan_bos;
+loc_year(2)=feb_bos;
+loc_year(3)=mar_bos;
+loc_year(4)=apr_bos;
+loc_year(5)=may_bos;
+loc_year(6)=jun_bos;
+loc_year(7)=jul_bos;
+loc_year(8)=aug_bos;
+loc_year(9)=sep_bos;
+loc_year(10)=oct_bos;
+loc_year(11)=nov_bos;
+loc_year(12)=dec_bos;
 end
