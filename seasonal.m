@@ -24,7 +24,7 @@ function[loc_year] = seasonal(LAT,LON)
 %    Data are from NASA?s Langley Research Center using POWER Data Access Viewer
 %==================================================================
 %% read the data in
-filename = 'POWER_Global_Climatology_d8169934.csv';
+filename = 'POWER_Global_Climatology_f3874e24.csv';
 solardata = readtable(filename);
 solarpara = solardata.PARAMETER;
 diffpara = solardata(strcmp(solarpara, 'DIFF'), :);

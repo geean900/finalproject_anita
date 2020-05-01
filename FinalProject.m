@@ -1,7 +1,7 @@
 %% Final Project
 %by Anita Gee
 %% Read Data in
-filename = 'POWER_Global_Climatology_d8169934.csv';
+filename = 'POWER_Global_Climatology_f3874e24.csv';
 solardata = readtable(filename);
 %% Separate the Parameters and put NaNs
 solarpara = solardata.PARAMETER;
@@ -13,9 +13,9 @@ lon = unique(diffpara.LON);
 diffann= diffpara.ANN;
 dnrann= dnrpara.ANN;
 albedoann= albedopara.ANN;
-diffann(diffann == -999)=NaN
-dnrann(dnrann == -999)=NaN
-albedoann(albedoann == -999)=NaN
+diffann(diffann == -999)=NaN;
+dnrann(dnrann == -999)=NaN;
+albedoann(albedoann == -999)=NaN;
 %% Global Annual Maps of Diffuse Radiation
 %Using similar method to Data Lab #2
 diff_ann = zeros(length(lon),length(lat));
@@ -137,7 +137,7 @@ geoshow(coastlat,coastlon,'Color','k')
 colorbar
 title('Annual Total Solar Radiation')
 %% Total Annual Solar Radiation that is greater than or equal to 4 kWh/m^2/day Globally
-global_ann(global_ann<4)= NaN
+global_ann(global_ann<4)= NaN;
 figure(4); clf
 worldmap('World')
 load coastlines
@@ -183,7 +183,7 @@ bos_year(10)=oct_bos;
 bos_year(11)=nov_bos;
 bos_year(12)=dec_bos;
 %Plot for Boston
-month = [1:12];
+month = (1:12);
 x = linspace(0,12,12);
 y = 4*ones(12);
 scatter(month,bos_year,'filled')
@@ -230,8 +230,8 @@ legend('Boston(Temperate)','Churchill(Temperate Subarctic)','Helena (Temperate G
 allmonths_diff = cat(3,diff_jan,diff_feb,diff_mar,diff_apr,diff_may,diff_jun,diff_jul,diff_aug,diff_sep,diff_oct,diff_nov,diff_dec);
 allmonths_dnr = cat(3,dnr_jan,dnr_feb,dnr_mar,dnr_apr,dnr_may,dnr_jun,dnr_jul,dnr_aug,dnr_sep,dnr_oct,dnr_nov,dnr_dec);
 allmonths_ann = allmonths_diff+allmonths_dnr;
-allmonths_ann(allmonths_ann==-999)=NaN
-allmonths_ann(allmonths_ann<4)=NaN
+allmonths_ann(allmonths_ann==-999)=NaN;
+allmonths_ann(allmonths_ann<4)=NaN;
 %Nans represent the months that have less than 4 kWh
 nans = zeros(length(lon),length(lat));
 for i = 1: length(lat)
@@ -243,7 +243,7 @@ end
 
 
 %% Global Map of 9 or more months have to greater than or equal to 4 kWh/m^2/day
-nans(nans>3)=NaN
+nans(nans>3)=NaN;
 worldmap('World')
 load coastlines
 contourfm(lat,lon, nans','linecolor','none')
@@ -252,7 +252,7 @@ colorbar
 title('Areas where solar panels should be built (3 or less months have less than 4 kWh/m^2/day)')
 
 %% Global Map of 0 months that have less than 4 kWh/m^2/day
-nans(nans>0)=NaN
+nans(nans>0)=NaN;
 worldmap('World')
 load coastlines
 contourfm(lat,lon, nans','linecolor','none')
